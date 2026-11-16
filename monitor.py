@@ -53,8 +53,8 @@ def get_card_oschad_usd():
 
 
 def send_telegram(message):
-    token = os.getenv("TELEGRAM_BOT_TOKEN")
-    chat_id = os.getenv("TELEGRAM_CHAT_ID")
+    token = (os.getenv("TELEGRAM_BOT_TOKEN") or "").strip()
+    chat_id = (os.getenv("TELEGRAM_CHAT_ID") or "").strip()
     if not token or not chat_id:
         print("Telegram не налаштований: перевірте TELEGRAM_BOT_TOKEN і TELEGRAM_CHAT_ID.")
         return
