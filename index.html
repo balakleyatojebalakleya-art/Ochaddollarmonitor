@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10243a">
+  <meta name="description" content="Історія курсу долара Ощадбанку">
+  <title>Курс долара — Ощадбанк</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <main class="container">
+    <header>
+      <div><p class="eyebrow">МОНІТОРИНГ ВАЛЮТИ</p><h1>Долар США <span>USD / UAH</span></h1></div>
+      <div class="live"><i></i> Історія курсу</div>
+    </header>
+    <section class="cards">
+      <article class="card"><p>Купівля</p><strong id="buy">—</strong><small>грн за 1 USD</small></article>
+      <article class="card"><p>Продаж</p><strong id="sell">—</strong><small>грн за 1 USD</small></article>
+    </section>
+    <section class="panel">
+      <div class="section-head"><div><h2>Динаміка курсу</h2><p id="updated">Завантаження даних…</p></div>
+        <select id="period" aria-label="Період графіка"><option value="7">7 днів</option><option value="30" selected>30 днів</option><option value="90">90 днів</option><option value="all">Увесь період</option></select>
+      </div>
+      <div class="chart-wrap"><canvas id="chart"></canvas></div>
+      <div class="legend"><span><i class="buy-dot"></i> Купівля</span><span><i class="sell-dot"></i> Продаж</span></div>
+    </section>
+    <section class="panel">
+      <div class="section-head"><div><h2>Останні оновлення</h2><p>Дані з офіційного сайту Ощадбанку</p></div></div>
+      <div class="table-wrap"><table><thead><tr><th>Дата та час</th><th>Купівля</th><th>Продаж</th></tr></thead><tbody id="history"><tr><td colspan="3">Завантаження…</td></tr></tbody></table></div>
+    </section>
+    <footer><p>Джерело: <a href="https://www.oschadbank.ua/currency-rate" target="_blank" rel="noopener">Ощадбанк</a>. Дані оновлюються автоматично приблизно кожні 30 хвилин.</p><p class="note">На першому етапі відображається курс «Для Мобільного Ощаду», а не індивідуальний готівковий курс конкретного відділення.</p></footer>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
