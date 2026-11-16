@@ -7,7 +7,7 @@ jobs:
   send-test-message:
     runs-on: ubuntu-latest
     steps:
-      - name: Send test message to Telegram
+      - name: Validate secrets and send test message
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -16,16 +16,23 @@ jobs:
           import os
           import requests
 
-          token = os.environ.get("TELEGRAM_BOT_TOKEN")
-          chat_id = os.environ.get("TELEGRAM_CHAT_ID")
+          token = (os.environ.get("TELEGRAM_BOT_TOKEN") or "").strip()
+          chat_id = (os.environ.get("TELEGRAM_CHAT_ID") or "").strip()
           if not token or not chat_id:
               raise SystemExit("Не задані TELEGRAM_BOT_TOKEN або TELEGRAM_CHAT_ID у GitHub Secrets.")
-
+          if any(ch.isspace() for ch in token):
+              raise SystemExit("У TELEGRAM_BOT_TOKEN є пробіли або переноси рядків. Створіть новий токен у BotFather і вставте його без пробілів.")
           response = requests.post(
-              f"https://api.telegram.org/bot{token}/sendMessage",
-              json={"chat_id": chat_id, "text": "✅ Тестове повідомлення: Telegram-сповіщення монітора Ощадбанку працює!"},
+              "https://api.telegram.org/bot" + token + "/sendMessage",
+              json={"chat_id": chat_id, "text": "Тест: Telegram-сповіщення монітора Ощадбанку працює!"},
               timeout=20,
           )
-          response.raise_for_status()
+          try:
+              result = response.json()
+          except ValueError:
+              raise SystemExit("Telegram повернув неочікувану відповідь HTTP " + str(response.status_code))
+          if not response.ok or not result.get("ok"):
+              # Не виводимо URL запиту, оскільки в ньому міститься токен.
+              raise SystemExit("Telegram API: " + str(result.get("description", "невідома помилка")) + " (HTTP " + str(response.status_code) + ")")
           print("Тестове повідомлення успішно надіслано.")
           PY
