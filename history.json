@@ -82,5 +82,12 @@
     "sell": 45.65,
     "source": "Ощадбанк — Для карток",
     "source_url": "https://www.oschadbank.ua/currency-rate"
+  },
+  {
+    "timestamp": "2026-11-26T22:57:44+00:00",
+    "buy": 44.85,
+    "sell": 45.5,
+    "source": "Ощадбанк — Для карток",
+    "source_url": "https://www.oschadbank.ua/currency-rate"
   }
 ]
